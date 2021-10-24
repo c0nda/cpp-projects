@@ -1,3 +1,0 @@
-C:/Users/Georgiy Voroncov/CLionProjects/18.10.20221/cmake-build-debug/CMakeFiles/18_10_20221.dir
-C:/Users/Georgiy Voroncov/CLionProjects/18.10.20221/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Georgiy Voroncov/CLionProjects/18.10.20221/cmake-build-debug/CMakeFiles/rebuild_cache.dir
