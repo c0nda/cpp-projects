@@ -158,6 +158,75 @@ void dayofweek() {
     std::cout << nameWeekDay[answerWK];
 }
 
+void roman() {
+    int n;
+    std::cin >> n;
+    if (n >= 1000) {
+        for (int i = 1; i <= n / 1000; ++i) {
+            std::cout << "M";
+        }
+        n %= 1000;
+    }
+    if (n >= 900) {
+        std::cout << "CM";
+        n %= 100;
+    }
+    if (n >= 500) {
+        std::cout << "D";
+        for (int i = 1; i <= n / 100 - 5; ++i) {
+            std::cout << "C";
+        }
+        n %= 100;
+    }
+    if (n >= 400){
+        std::cout << "CD";
+        n %= 100;
+    }
+    if (n >= 100) {
+        for (int i = 1; i <= n / 100; ++i){
+            std::cout << "C";
+        }
+        n %= 100;
+    }
+    if (n >= 90){
+        std::cout << "XC";
+        n %= 10;
+    }
+    if (n >= 50){
+        std::cout << "L";
+        for (int i = 1; i <= n / 10 - 5; ++i){
+            std::cout << "X";
+        }
+        n %= 10;
+    }
+    if (n >= 40){
+        std::cout << "XL";
+        n %= 10;
+    }
+    if (n >= 10){
+        for (int i = 1; i <= n / 10; ++i){
+            std::cout << "X";
+        }
+        n %= 10;
+    }
+    if (n == 9){
+        std::cout << "IX";
+    }
+    if (n >= 5 && n < 9){
+        std::cout << "V";
+        for (int i = 1; i <= n - 5; ++i){
+            std::cout << "I";
+        }
+    }
+    if (n == 4){
+        std::cout << "IV";
+    }
+    if (n < 4){
+        for (int i = 1; i <= n; ++i){
+            std::cout << "I";
+        }
+    }
+}
 
 int main() {
 //    sum_char();
@@ -167,6 +236,7 @@ int main() {
 //    time_hms();
 //    time_ymd();
 //    dayofweek();
-    hex();
+//    hex();
+//    roman();
     return 0;
 }
