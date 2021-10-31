@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 void minelemAndAverage() {
     double average, sum = 0;
@@ -95,9 +96,24 @@ void moreLessAvg() {
 }
 
 void most_common_el() {
-
+    int max, most_common, counter = 1;
+    int values[10] = {1, 6, 9, 8, 7, 8, 7, 7, 2, 10};
+    std::sort(values, values + 10);
+    for (int i = 0; i < 10; ++i) {
+        if (values[i + 1] == values[i]){
+            counter += 1;
+        } else{
+            if (counter >= max){
+                max = counter;
+                most_common = values[i];
+            }
+            counter = 1;
+        }
+    }
+    std::cout << most_common << " repeats " << max << " times";
 }
 
+// упорядочено попарно
 void couples() {
     const int n = 5;
     int array1[n] = {22, 21, 8, 6, 3};
@@ -105,19 +121,52 @@ void couples() {
     int answer[n * 2];
     int j = 0;
 
-    for (int i = 0; i <= n - 1; ++i){
-        if (array1[i] >= array2[i]){
+    for (int i = 0; i <= n - 1; ++i) {
+        if (array1[i] >= array2[i]) {
             answer[i + j] = array2[i];
             answer[i + 1 + j] = array1[i];
-            j += 1;
         } else {
             answer[i + j] = array1[i];
             answer[i + 1 + j] = array2[i];
-            j += 1;
         }
+        ++j;
     }
     for (int i = 0; i <= n * 2 - 1; ++i) {
         std::cout << answer[i] << " ";
+    }
+}
+
+void rand_for_2array() {
+    int array[3][4];
+    for (int i = 0; i <= 2; ++i) {
+        for (int j = 0; j <= 3; ++j) {
+            array[i][j] = rand() % 100; // NOLINT(cert-msc30-c, cert-msc50-cpp)
+            std::cout << array[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+
+}
+
+void t_matrix(){
+    const int n = 4;
+    const int k = 3;
+    int array[n][k];
+    for (int i = 0; i <= n - 1; ++i) {
+        for (int j = 0; j <= k - 1; ++j) {
+            array[i][j] = rand() % 100; // NOLINT(cert-msc30-c, cert-msc50-cpp)
+            std::cout << array[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    std::cout << std::endl;
+
+    for (int j = 0; j <= k - 1; ++j){
+        for (int i = 0; i <= n - 1; ++i){
+            std::cout << array[i][j] << " ";
+        }
+        std::cout << std::endl;
     }
 }
 
@@ -127,5 +176,8 @@ int main() {
 //    reverse_array();
 //    moreLessAvg();
 //    most_common_el();
-    couples();
+//    couples();
+//    rand_for_2array();
+//    most_common_el();
+//    t_matrix();
 }
