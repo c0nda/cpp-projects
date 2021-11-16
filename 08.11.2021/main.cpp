@@ -195,25 +195,30 @@ void circle_snake() {
     }
 
     for (int i = 0; i < min_value; ++i) {
-        if (columns > rows){
+        if (columns > rows) {
             std::swap(max_name, min_name);
         }
+        if (counter > rows * columns) break;
         for (int j = i; j < columns - i; ++j) {
             ppi[i][j] = counter;
             ++counter;
         }
+        if (counter > rows * columns) break;
         for (int k = 1 + i; k < rows - i; ++k) {
             ppi[k][min_name - 1 - i] = counter;
             ++counter;
         }
+        if (counter > rows * columns) break;
         for (int m = columns - 2 - i; m >= i; --m) {
             ppi[max_name - 1 - i][m] = counter;
             ++counter;
         }
+        if (counter >= rows * columns) break;
         for (int n = rows - 2 - i; n >= i + 1; --n) {
             ppi[n][i] = counter;
             ++counter;
         }
+        if (counter > rows * columns) break;
     }
 
     printArray(ppi, rows, columns);
