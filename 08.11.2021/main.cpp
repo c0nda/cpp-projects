@@ -177,7 +177,6 @@ void diagonal_snake_array_dep() {
 
 void circle_snake() {
     int rows, columns, counter = 1, min_value, min_name, max_name;
-    bool stop = true;
     std::cin >> rows >> columns;
 
     int **ppi = new int *[rows];
