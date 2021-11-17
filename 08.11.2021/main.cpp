@@ -3,7 +3,7 @@
 void printArray(int **arr, int rows, int columns) {
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < columns; ++j) {
-            std::cout << arr[i][j] << " ";
+            std::cout << arr[i][j] << "\t";
         }
         std::cout << std::endl;
     }
@@ -177,6 +177,7 @@ void diagonal_snake_array_dep() {
 
 void circle_snake() {
     int rows, columns, counter = 1, min_value, min_name, max_name;
+    bool stop = true;
     std::cin >> rows >> columns;
 
     int **ppi = new int *[rows];
@@ -194,10 +195,12 @@ void circle_snake() {
         max_name = columns;
     }
 
+    if (columns > rows) {
+        std::swap(max_name, min_name);
+    }
+
     for (int i = 0; i < min_value; ++i) {
-        if (columns > rows) {
-            std::swap(max_name, min_name);
-        }
+
         if (counter > rows * columns) break;
         for (int j = i; j < columns - i; ++j) {
             ppi[i][j] = counter;
@@ -213,7 +216,7 @@ void circle_snake() {
             ppi[max_name - 1 - i][m] = counter;
             ++counter;
         }
-        if (counter >= rows * columns) break;
+        if (counter > rows * columns) break;
         for (int n = rows - 2 - i; n >= i + 1; --n) {
             ppi[n][i] = counter;
             ++counter;
