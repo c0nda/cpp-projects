@@ -46,5 +46,6 @@ bool testConst_array(int **arr){
 
 int main() {
     std::cout << testConst_array(const_array<int>(3, 3, 3)) << std::endl;
+    delete
     return 0;
 }
