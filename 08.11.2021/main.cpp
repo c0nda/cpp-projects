@@ -55,45 +55,6 @@ void straight_snake_array_indep() {
     delete[] ppi;
 }
 
-void straight_snake_array_dep() {
-
-    int rows, columns;
-    std::cin >> rows >> columns;
-
-    int *pi = new int[rows * columns];
-    int **ppi = new int *[rows];
-
-    for (int i = 0, j = 0; i < rows * columns; i += columns, ++j) {
-        ppi[j] = &pi[i];
-    }
-
-    int counter = 1;
-
-    for (int i = 0; i < rows; ++i) {
-
-        for (int j = 0; j < columns; ++j) {
-            if (i % 2 == 0) {
-                ppi[i][j] = counter;
-                ++counter;
-            } else {
-                ppi[i][j] = counter + columns - 1;
-                --counter;
-            }
-        }
-        counter = columns * (i + 1) + 1;
-    }
-
-    printArray(ppi, rows, columns);
-
-    for (int i = 0; i < rows; ++i) {
-        delete[] ppi[i];
-    }
-
-    delete[] pi;
-    delete[] ppi;
-}
-
-
 void diagonal_snake_array_indep() {
     int rows, columns, counter = 1;
 
@@ -131,48 +92,6 @@ void diagonal_snake_array_indep() {
     }
 
     delete[] ppi;
-}
-
-void diagonal_snake_array_dep() {
-    int rows, columns, counter = 1;
-
-    std::cin >> rows >> columns;
-
-    int *pi = new int[rows * columns];
-    int **ppi = new int *[rows];
-
-    for (int i = 0, j = 0; i < rows * columns; i += columns, ++j) {
-        ppi[j] = &pi[i];
-    }
-
-    for (int sum = 1; sum <= rows + columns - 1; ++sum) {
-        for (int i = 0, j = sum - 1; i < sum; ++i, --j) {
-            if (sum % 2 == 0) {
-                if (i < rows && j < columns) {
-                    ppi[i][j] = counter;
-                    ++counter;
-                } else {
-                    continue;
-                }
-            } else {
-                if (j < rows && i < columns) {
-                    ppi[j][i] = counter;
-                    ++counter;
-                } else {
-                    continue;
-                }
-            }
-        }
-    }
-
-    printArray(ppi, rows, columns);
-
-    for (int i = 0; i < rows; ++i) {
-        delete[] ppi[i];
-    }
-
-    delete[] ppi;
-    delete[] pi;
 }
 
 void circle_snake() {
