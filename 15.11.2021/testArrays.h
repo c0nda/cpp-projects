@@ -9,6 +9,7 @@ void printArray(T **arr, int rows, int columns) {
         }
         std::cout << std::endl;
     }
+    std::cout << std::endl;
 }
 
 template<typename T>
@@ -53,18 +54,22 @@ T **const_array(int rows, int columns, T cnst) {
 }
 
 template<typename T>
-T **matrix_111(int rows, int columns) {
-    T **ppi = create_2D_indep_array<T>(rows, columns);
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < columns; ++j) {
-            if (i == j) {
-                ppi[i][j] = 1;
-            } else {
-                ppi[i][j] = 0;
+T **ematrix(int rows, int columns) {
+    if (rows == columns) {
+        T **ppi = create_2D_indep_array<T>(rows, columns);
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < columns; ++j) {
+                if (i == j) {
+                    ppi[i][j] = 1;
+                } else {
+                    ppi[i][j] = 0;
+                }
             }
         }
+        return ppi;
+    } else {
+        return nullptr;
     }
-    return ppi;
 }
 
 template<typename T>
@@ -110,7 +115,7 @@ T **create_multiplyMatrixByNumber(T **matrix, int rows, int columns, int number)
 }
 
 template<typename T>
-T **create_multiplyMatrixByNumber(T **matrix1, T **matrix2, int rows, int columns) {
+T **additionOfMatrices(T **matrix1, T **matrix2, int rows, int columns) {
     T **result = create_2D_indep_array<T>(rows, columns);
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < columns; ++j) {
@@ -138,7 +143,7 @@ T **multiplyMatrixByMatrix(T **matrix1, T **matrix2, int rows1, int columns1, in
 }
 
 template<typename T>
-T **change2RowsOrColumns(T** arr, int rows, int columns, char name, int num1, int num2) {
+T **change2RowsOrColumns(T **arr, int rows, int columns, char name, int num1, int num2) {
     if (name == 'c') {
         if (num1 < columns & num2 < columns) {
             for (int i = 0; i < rows; ++i) {
