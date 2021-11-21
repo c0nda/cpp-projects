@@ -42,7 +42,7 @@ T **create_2D_dep_array(int rows, int columns) {
 
 template<typename T>
 T **const_array(int rows, int columns, T cnst) {
-    int **ppi = new int *[rows];
+    T **ppi = new int *[rows];
     for (int i = 0; i < rows; ++i) {
         ppi[i] = new int[columns];
 
