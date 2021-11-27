@@ -22,17 +22,17 @@ void delete_2Darray(T **ppi, int rows) {
 
 template<typename T>
 T **create_2D_indep_array(int rows, int columns) {
-    T **arr = new int *[rows];
+    T **arr = new T *[rows];
     for (int i = 0; i < rows; ++i) {
-        arr[i] = new int[columns];
+        arr[i] = new T[columns];
     }
     return arr;
 }
 
 template<typename T>
 T **create_2D_dep_array(int rows, int columns) {
-    T *pi = new int[rows * columns]{0};
-    T **ppi = new int *[rows];
+    T *pi = new T[rows * columns]{0};
+    T **ppi = new T *[rows];
     for (int i = 0, j = 0; i < rows * columns; i += columns, ++j) {
         ppi[j] = &pi[i];
     }
@@ -42,9 +42,9 @@ T **create_2D_dep_array(int rows, int columns) {
 
 template<typename T>
 T **const_array(int rows, int columns, T cnst) {
-    T **ppi = new int *[rows];
+    T **ppi = new T *[rows];
     for (int i = 0; i < rows; ++i) {
-        ppi[i] = new int[columns];
+        ppi[i] = new T[columns];
 
         for (int j = 0; j < columns; ++j) {
             ppi[i][j] = cnst;
