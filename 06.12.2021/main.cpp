@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include "testArrays.h"
 
 // меняем местами длину и ширину картинки
 //int main(int argc, char *argv[]) {
@@ -168,16 +169,13 @@
 //            ifs.read((char *) &px, sizeof(int));
 //            ifs.seekg(px);
 //            ofs.seekp(px);
-//            char buffer1[1];
-//            char buffer2[1];
-//            char buffer3[1];
+//            char buffer[3];
 //            for (int i = 0; i < (size - px) / 3; ++i) {
-//                ifs.read((char *) &buffer1, sizeof(char));
-//                ifs.read((char *) &buffer2, sizeof(char));
-//                ifs.read((char *) &buffer3, sizeof(char));
-//                ofs.write(buffer3, sizeof(char));
-//                ofs.write(buffer2, sizeof(char));
-//                ofs.write(buffer1, sizeof(char));
+//                ifs.read((char *) &buffer[0], sizeof(char));
+//                ifs.read((char *) &buffer[1], sizeof(char));
+//                ifs.read((char *) &buffer[2], sizeof(char));
+//                std::swap(buffer[0], buffer[2]);
+//                ofs.write(buffer, 3 * sizeof(char));
 //            }
 //            ifs.close();
 //            ofs.close();
@@ -187,3 +185,78 @@
 //    }
 //    return 0;
 //}
+
+
+//int main(int argc, char *argv[]) {
+//    if (argc > 2) {
+//        std::ifstream ifs;
+//        std::ofstream ofs;
+//        ifs.open(argv[1], std::ios_base::binary);
+//        ofs.open(argv[2], std::ios_base::binary);
+//        int width, height, px, bpp;
+//        ifs.seekg(18);
+//        ifs.read((char *) &width, sizeof(int));
+//        ifs.read((char *) &height, sizeof(int));
+//        ifs.seekg(28);
+//        ifs.read((char *) &bpp, sizeof(int));
+//        ifs.seekg(10);
+//        ifs.read((char *) &px, sizeof(int));
+//        ifs.seekg(px);
+//        unsigned char **bytes = create_2D_indep_array<unsigned char>(width, height);
+//        unsigned char first;
+//        ifs.seekg(px);
+//        ifs.read((char *) &first, bpp);
+//        for (size_t i = 0; i < width; ++i) {
+//            for (size_t j = 0; j < height; ++j) {
+//                ifs.read((char *) &bytes[i][j], bpp);
+//                if (first == bytes[i][j]) {
+//                    std::cout << 0 << " ";
+//                } else {
+//                    std::cout << 1 << " ";
+//                }
+//            }
+//        }
+//        ifs.close();
+//        ofs.close();
+//        delete_2Darray(bytes, width);
+//    }
+//    return 0;
+//}
+
+int main(int argc, char *argv[]) {
+    if (argc > 2) {
+        std::ifstream ifs;
+        std::fstream ofs;
+        ifs.open(argv[1], std::ios_base::binary);
+        ofs.open(argv[2], std::ios_base::binary | std::ios_base::in | std::ios_base::out);
+        if (ifs.is_open() && ofs.is_open()) {
+            int width1, height1, px, width2, height2, bpp;
+            ifs.seekg(28);
+            ifs.read((char *) &bpp, sizeof(int));
+            ifs.seekg(18);
+            ifs.read((char *) &width1, sizeof(int));
+            ifs.read((char *) &height1, sizeof(int));
+            ifs.seekg(10);
+            ifs.read((char *) &px, sizeof(int));
+            ifs.seekg(px);
+            ofs.seekp(18);
+            ofs.read((char *) &width2, sizeof(int));
+            ofs.read((char *) &height2, sizeof(int));
+            std::cout << width1 << " " << height1 << " " << width2 << " " << height2 << std::endl;
+
+            width1 = width1 / 8;
+            width2 = width2 / 8;
+            std::cout << width1 << " " << height1 << " " << width2 << " " << height2 << std::endl;
+            char buffer[width1];
+            for (int i = 1; i <= height1; ++i) {
+                ifs.seekg((-1) * width1 * i, std::ios::end);
+                ifs.read((char *) &buffer, width1 * sizeof(char));
+                ofs.seekp((-1) * width2 * i, std::ios::end);
+                ofs.write(buffer, width1 * sizeof(char));
+            }
+            ifs.close();
+            ofs.close();
+        }
+    }
+    return 0;
+}
