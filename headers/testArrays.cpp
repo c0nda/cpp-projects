@@ -2,10 +2,11 @@
 #include <random>
 #include "testArrays.h"
 #include <ctime>
+#include <string>
 
-double **random_double_array(int rows, int columns){
+double **random_double_array(int rows, int columns) {
     double **arr = create_2D_indep_array<double>(rows, columns);
-    for (int i = 0; i < rows; ++i){
+    for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < columns; ++j) {
             std::mt19937 gen(time(nullptr));
             std::uniform_real_distribution<> urd(0, 3);
@@ -47,7 +48,49 @@ int determinant(int **arr, int size) {
             det += deg * arr[0][j] * determinant(result, size - 1);
             deg = -deg;
         }
-        delete_2Darray(result, size - 1);
+        delete_2D_indep_array(result, size - 1);
     }
     return det;
+}
+
+double **gauss_algorithm(double **matrix, size_t rows, size_t columns) {
+    // прямой ход
+    for (size_t n = 0; n < columns; ++n) {
+        for (size_t i = n; i < rows; ++i) {
+            if (matrix[i][n] != 0) {
+                change2RowsOrColumns(matrix, rows, columns, 'r', n, i, n);
+                break;
+            }
+        }
+        for (size_t j = n + 1; j < rows; ++j) {
+            if (matrix[j][n] != 0) {
+                double cf = matrix[j][n] / matrix[n][n];
+                for (size_t k = n; k < columns; ++k) {
+                    matrix[j][k] -= cf * matrix[n][k];
+                }
+            }
+        }
+        for (size_t m = n; m < rows; ++m) {
+            if (matrix[n][n] != 0) {
+                matrix[n][m] /= matrix[n][n];
+            }
+        }
+    }
+
+    // обратный ход
+//    for (size_t i = rows - 1; i >= 0 && i < rows; --i) {
+//        double div = matrix[i][columns - 1];
+//        for (size_t j = columns - 1; j >= 0 && j < columns; --j) {
+//            if (matrix[i][j] != 0) {
+//                matrix[i][j] /= div;
+//            }
+//        }
+//        for (size_t n = i - 1; n >= 0 && n < rows; --n) {
+//            double cf = matrix[n][i] / matrix[i][i];
+//            for (size_t k = rows - 1; k >= 0 && k < columns; --k) {
+//                matrix[n][k] -= cf * matrix[i][k];
+//            }
+//        }
+//    }
+    return matrix;
 }

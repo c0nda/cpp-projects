@@ -7,6 +7,8 @@ void get_matrix_for_det(int **, int, size_t, size_t, int **);
 
 int determinant(int **, int);
 
+double **gauss_algorithm(double **, size_t, size_t);
+
 template<typename T>
 void printArray(T **arr, size_t rows, size_t columns) {
     for (size_t i = 0; i < rows; ++i) {
@@ -19,7 +21,7 @@ void printArray(T **arr, size_t rows, size_t columns) {
 }
 
 template<typename T>
-void delete_2Darray(T **ppi, size_t rows) {
+void delete_2D_indep_array(T **ppi, size_t rows) {
     for (size_t i = 0; i < rows; ++i) {
         delete[] ppi[i];
     }
@@ -159,10 +161,10 @@ T **multiplyMatrixByMatrix(T **matrix1, T **matrix2, size_t rows1, size_t column
 }
 
 template<typename T>
-T **change2RowsOrColumns(T **arr, size_t rows, size_t columns, char name, size_t num1, size_t num2) {
+T **change2RowsOrColumns(T **arr, size_t rows, size_t columns, char name, size_t num1, size_t num2, size_t elem) {
     if (name == 'c') {
         if (num1 < columns & num2 < columns) {
-            for (size_t i = 0; i < rows; ++i) {
+            for (size_t i = elem; i < rows; ++i) {
                 std::swap(arr[i][num1], arr[i][num2]);
             }
         }
@@ -170,7 +172,7 @@ T **change2RowsOrColumns(T **arr, size_t rows, size_t columns, char name, size_t
 
     if (name == 'r') {
         if (num1 < rows & num2 < rows) {
-            for (size_t i = 0; i < columns; ++i) {
+            for (size_t i = elem; i < columns; ++i) {
                 std::swap(arr[num1][i], arr[num2][i]);
             }
         }
