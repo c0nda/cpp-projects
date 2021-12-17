@@ -230,25 +230,26 @@ int main(int argc, char *argv[]) {
         ifs.open(argv[1], std::ios_base::binary);
         ofs.open(argv[2], std::ios_base::binary | std::ios_base::in | std::ios_base::out);
         if (ifs.is_open() && ofs.is_open()) {
-            int width1, height1, px, width2, height2, bpp;
-            ifs.seekg(28);
-            ifs.read((char *) &bpp, sizeof(int));
+            int width1, height1, width2, height2;
             ifs.seekg(18);
             ifs.read((char *) &width1, sizeof(int));
             ifs.read((char *) &height1, sizeof(int));
-            ifs.seekg(10);
-            ifs.read((char *) &px, sizeof(int));
-            ifs.seekg(px);
             ofs.seekp(18);
             ofs.read((char *) &width2, sizeof(int));
             ofs.read((char *) &height2, sizeof(int));
+            if (width1 % 32 != 0) {
+                width1 = width1 + 32 - (width1 % 32);
+            }
+            if (width2 % 32 != 0) {
+                width2 = width2 + 32 - (width2 % 32);
+            }
             std::cout << width1 << " " << height1 << " " << width2 << " " << height2 << std::endl;
 
             width1 = width1 / 8;
             width2 = width2 / 8;
             std::cout << width1 << " " << height1 << " " << width2 << " " << height2 << std::endl;
             char buffer[width1];
-            for (int i = 1; i <= height1; ++i) {
+            for (int i = 1; i < height1; ++i) {
                 ifs.seekg((-1) * width1 * i, std::ios::end);
                 ifs.read((char *) &buffer, width1 * sizeof(char));
                 ofs.seekp((-1) * width2 * i, std::ios::end);
