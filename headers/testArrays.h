@@ -48,10 +48,10 @@ T **create_2D_dep_array(size_t rows, size_t columns) {
 }
 
 template<typename T>
-T** random_array(size_t rows, size_t columns, int num){
+T **random_array(size_t rows, size_t columns, int num) {
     T **arr = create_2D_indep_array<T>(rows, columns);
-    for (size_t i = 0; i < rows; ++i){
-        for (size_t j = 0; j < columns; ++j){
+    for (size_t i = 0; i < rows; ++i) {
+        for (size_t j = 0; j < columns; ++j) {
             arr[i][j] = rand() % num;
         }
     }
