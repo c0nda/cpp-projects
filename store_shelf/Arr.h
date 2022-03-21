@@ -121,7 +121,6 @@ void Arr<T>::removeElement(size_t index) {
         delete[] storage_;
         storage_ = new_arr;
         --size_;
-        rewind();
     } else {
         std::cout << "Invalid index" << std::endl;
     }
@@ -143,7 +142,6 @@ void Arr<T>::addElement(T elem) {
     new_arr[size_] = elem;
     delete[] storage_;
     storage_ = new_arr;
-    rewind();
     ++size_;
 }
 
@@ -163,7 +161,6 @@ void Arr<T>::resize(size_t newsize) {
         rewind();
         delete[] storage_;
         storage_ = new_arr;
-        rewind();
     } else {
         for (size_t i = 0; i < newsize; ++i) {
             new_arr[i] = getCurValue();
@@ -176,7 +173,6 @@ void Arr<T>::resize(size_t newsize) {
         rewind();
         delete[] storage_;
         storage_ = new_arr;
-        rewind();
     }
     size_ = newsize;
 }
@@ -191,7 +187,6 @@ void Arr<T>::printInfo() {
             if (!canMoveNext()) break;
             moveNext();
         }
-        rewind();
         std::cout << std::endl;
         std::cout << "Size: " << size_ << std::endl;
     } else {
@@ -208,7 +203,6 @@ void Arr<T>::fillRand() {
             if (!canMoveNext()) break;
             moveNext();
         }
-        rewind();
     } else {
         std::cout << "Nullptr error" << std::endl;
     }
