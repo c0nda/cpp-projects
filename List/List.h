@@ -2,6 +2,8 @@
 
 #include <cstring>
 
+class Node;
+
 template<typename T>
 class List {
 public:
@@ -72,19 +74,19 @@ public:
         }
 
         ListMarker(Node *p){
-            cur_ = nullptr;
+            cur_ = p;
         }
 
         T &getCurValue() {
-            return cur_->data_;
+            return List::Node::cur_->next_;
         }
 
         void moveNext() {
-            cur_ = cur_->next_;
+            cur_ = List::Node::cur_->next_;
         }
 
         bool canMoveNext() {
-            return (cur_->next_ != nullptr);
+            return (List::Node::cur_->next_ != nullptr);
         }
 
     private:
