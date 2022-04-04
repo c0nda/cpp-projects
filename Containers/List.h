@@ -17,6 +17,31 @@ class List {
     Node *first_;
     size_t size_;
 public:
+
+    class Marker {
+    public:
+        Marker(Node *pos = nullptr) {
+            cur_marker_ = pos;
+        }
+
+        T &getCurValue() const {
+            return cur_marker_->data_;
+        }
+
+        void moveNext() {
+            cur_marker_ = cur_marker_->next_;
+        }
+
+        bool operator!=(const Marker &pos) const { return cur_marker_ != pos.cur_marker_; }
+
+        bool operator==(const Marker &pos) const { return cur_marker_ == pos.cur_marker_; }
+
+        friend class List;
+
+    private:
+        Node *cur_marker_;
+    };
+
     List() {
         size_ = 0;
         first_ = nullptr;
@@ -61,30 +86,6 @@ public:
     ~List() {
         clear();
     }
-
-    class Marker {
-    public:
-        Marker(Node *pos = nullptr) {
-            cur_marker_ = pos;
-        }
-
-        T &getCurValue() {
-            return cur_marker_->data_;
-        }
-
-        void moveNext() {
-            cur_marker_->next_;
-        }
-
-        bool operator!=(const Marker &pos) const { return cur_marker_ != pos.cur_marker_; }
-
-        bool operator==(const Marker &pos) const { return cur_marker_ == pos.cur_marker_; }
-
-        friend class List;
-
-    private:
-        Node *cur_marker_;
-    };
 
     Marker rewind() const { return Marker(first_); }
 
@@ -131,14 +132,54 @@ void List<T>::addElement(const T &elem) {
 template<typename T>
 typename List<T>::Marker List<T>::find(const T &elem) const {
     Node *current = first_;
-    while (current){
-        if (*current->data_ == elem){
+    while (current) {
+        if (current->data_ == elem) {
             return Marker(current);
         }
         current = current->next_;
     }
     return fastForward();
 }
+
+template<typename T>
+void List<T>::removeElement(const Marker &pos) {
+    if (pos == fastForward()) return;
+
+    Node *tmp1 = first_;
+
+    if (pos.getCurValue() == first_->data_) {
+        first_ = tmp1->next_;
+        delete tmp1;
+        --size_;
+        return;
+    }
+
+    tmp1 = first_;
+    while (tmp1->next_->next_ != nullptr) {
+        tmp1 = tmp1->next_;
+    }
+    if (tmp1->next_->data_ == pos.getCurValue()){
+        delete tmp1->next_;
+        tmp1->next_ = nullptr;
+        --size_;
+        return;
+    }
+
+    tmp1 = first_;
+    Node *tmp2 = first_->next_;
+    while (tmp2 && tmp2->data_ != pos.getCurValue()) {
+        tmp1 = tmp1->next_;
+        tmp2 = tmp2->next_;
+    }
+
+    if (tmp2) {
+        tmp1->next_ = tmp2->next_;
+        delete tmp2;
+        --size_;
+        return;
+    }
+}
+
 
 
 
